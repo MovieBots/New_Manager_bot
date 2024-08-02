@@ -1,8 +1,9 @@
-# handlers/admin.py
-
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from datetime import datetime, timedelta
+from database import database  # Import the database module
+
+premium_users = {}  # You may need to initialize this or import it from your main script
 
 def handle_admin_commands(client: Client, message):
     command = message.text.split()[0].strip().lower()
@@ -47,3 +48,4 @@ def handle_admin_commands(client: Client, message):
             "Premium Users:",
             reply_markup=reply_markup
         )
+
