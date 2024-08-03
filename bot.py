@@ -1,9 +1,11 @@
 import logging
-import sys  # Import sys
+import sys
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
-from datetime import datetime  # Import datetime
+from datetime import datetime
 from config import API_HASH, API_ID, TG_BOT_TOKEN, TG_BOT_WORKERS, PORT
+from pyrogram.errors import FloodWait
+import time
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -14,7 +16,7 @@ class Bot(Client):
         super().__init__(
             name="Bot",
             api_hash=API_HASH,
-            api_id=API_ID,  # Use API_ID instead of APP_ID
+            api_id=API_ID,
             plugins={
                 "root": "plugins"  # Ensure this points to the correct plugins directory
             },
@@ -24,13 +26,15 @@ class Bot(Client):
         self.LOGGER = LOGGER
 
     async def start(self):
-        await super().start()
-        usr_bot_me = await self.get_me()
-        self.uptime = datetime.now()
-        
-        self.set_parse_mode(ParseMode.HTML)
-        self.LOGGER.info(f"Bot Running..!\n\nCreated by \n@iTz_Anayokoji")
-        self.LOGGER.info(f"""\n\n
+        while True:
+            try:
+                await super().start()
+                usr_bot_me = await self.get_me()
+                self.uptime = datetime.now()
+                
+                self.set_parse_mode(ParseMode.HTML)
+                self.LOGGER.info(f"Bot Running..!\n\nCreated by \n@iTz_Anayokoji")
+                self.LOGGER.info(f"""\n\n
  █████╗ ███╗   ██╗██╗███████╗██╗  ██╗██╗███╗   ██╗
 ██╔══██╗████╗  ██║██║██╔════╝██║  ██║██║████╗  ██║
 ███████║██╔██╗ ██║██║███████╗███████║██║██╔██╗ ██║
@@ -39,7 +43,11 @@ class Bot(Client):
 ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝                 
                                    
                                     """)
-        self.username = usr_bot_me.username
+                self.username = usr_bot_me.username
+                break
+            except FloodWait as e:
+                LOGGER.warning(f"FloodWait: Waiting for {e.x} seconds.")
+                time.sleep(e.x)
 
     async def stop(self, *args):
         await super().stop()
@@ -48,4 +56,3 @@ class Bot(Client):
 if __name__ == "__main__":
     bot = Bot()
     bot.run()
-
