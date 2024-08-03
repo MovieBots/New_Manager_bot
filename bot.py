@@ -1,8 +1,7 @@
-from pyrogram import Client, filters, ParseMode
+from pyrogram import Client, filters
 from pyrogram.types import Message
 from datetime import datetime
 import os
-import sys
 
 # Import your handlers
 from handlers.start import start_command
@@ -26,7 +25,6 @@ class Bot(Client):
         usr_bot_me = await self.get_me()
         self.uptime = datetime.now()
         
-        self.set_parse_mode(ParseMode.HTML)
         self.LOGGER.info(f"Bot Running..!\n\nCreated by \n@iTz_Anayokoji")
         self.LOGGER.info(f"""\n\n
  █████╗ ███╗   ██╗██╗███████╗██╗  ██╗██╗███╗   ██╗
@@ -50,3 +48,4 @@ class Bot(Client):
 if __name__ == "__main__":
     bot = Bot()
     bot.run()
+
