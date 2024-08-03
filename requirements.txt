@@ -1,4 +1,4 @@
 aiohttp
-pyrogram
+pyrofork
 pyromod
 TgCrypto
