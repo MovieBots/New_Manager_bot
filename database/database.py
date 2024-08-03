@@ -1,5 +1,3 @@
-# database/database.py
-
 import os
 
 admins_file = "admins.txt"
@@ -15,3 +13,4 @@ def save_admin_ids(admin_ids):
     with open(admins_file, "w") as f:
         for admin_id in admin_ids:
             f.write(str(admin_id) + "\n")
+
