@@ -9,7 +9,6 @@ from config import API_HASH, API_ID, TG_BOT_TOKEN, TG_BOT_WORKERS, PORT
 logging.basicConfig(level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
-pyrogram.utils.MIN_CHANNEL_ID = -1009147483647
 
 class Bot(Client):
     def __init__(self):
