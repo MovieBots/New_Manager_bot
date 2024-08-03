@@ -1,11 +1,5 @@
-# handlers/help.py
-
 from pyrogram import Client, filters
+from pyrogram.types import Message
 
-def help_command(client: Client, message):
-    client.send_message(
-        message.chat.id,
-        "Here is how to use me:\n"
-        "Use /buy_premium to buy membership.\n"
-        "If you want to know more, contact Owner."
-    )
+async def help_command(client: Client, message: Message):
+    await message.reply("Here is how to use me:\nUse /buy_premium to buy membership.\nIf you want to know more, contact Owner.")
