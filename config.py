@@ -6,4 +6,4 @@ TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 PORT = os.environ.get("PORT", "8080")
 OWNER_ID = int(os.environ.get("OWNER_ID", "6450266465"))
-ADMIN_IDS = set(map(int, os.environ.get("ADMIN_IDS", "6450266465").split(',')))
+ADMINS = [int(admin) for admin in os.getenv("ADMINS", "").split()]
