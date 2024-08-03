@@ -2,7 +2,7 @@ import logging
 from aiohttp import web
 from pyrogram import Client, filters
 from pyrogram.enums import ParseMode
-from config import API_HASH, APP_ID, TG_BOT_TOKEN, TG_BOT_WORKERS, PORT
+from config import API_HASH, API_ID, TG_BOT_TOKEN, TG_BOT_WORKERS, PORT
 
 
 # Set up logging
