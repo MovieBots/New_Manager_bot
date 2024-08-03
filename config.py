@@ -1,5 +1,8 @@
 # config.py
 # API_KEY = TG_BOT_TOKEN
+# Port is 8080 for this script 
+# Aprit Bhai tum eak kam karna ke jo hai na API_KEY iss jaha tum 
+# deploy karo vaha lagana varna github account ban ho jata hai '''
 
 
 API_ID = "15646796"
