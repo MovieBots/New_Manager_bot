@@ -1,4 +1,6 @@
 # config.py
+# API_KEY = TG_BOT_TOKEN
+
 
 API_ID = "15646796"
 API_HASH = "08bdb932cf2815a46b2a5f17cf245bfe"
