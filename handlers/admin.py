@@ -1,11 +1,7 @@
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from datetime import datetime, timedelta
-from database import database  # Import the database module
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-premium_users = {}  # You may need to initialize this or import it from your main script
-
-def handle_admin_commands(client: Client, message):
+async def handle_admin_commands(client: Client, message: Message):
     command = message.text.split()[0].strip().lower()
     user_id = int(message.text.split()[1])
 
@@ -18,24 +14,14 @@ def handle_admin_commands(client: Client, message):
              InlineKeyboardButton("1 year", callback_data=f"add_premium_1y_{user_id}")]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        client.send_message(
-            message.chat.id,
-            "Select the duration for the premium membership:",
-            reply_markup=reply_markup
-        )
+        await client.send_message(message.chat.id, "Select the duration for the premium membership:", reply_markup=reply_markup)
 
     elif command == "/remove_user":
         if user_id in premium_users:
             del premium_users[user_id]
-            client.send_message(
-                message.chat.id,
-                f"User {user_id} has been removed from premium membership."
-            )
+            await client.send_message(message.chat.id, f"User {user_id} has been removed from premium membership.")
         else:
-            client.send_message(
-                message.chat.id,
-                f"User {user_id} is not a premium member."
-            )
+            await client.send_message(message.chat.id, f"User {user_id} is not a premium member.")
 
     elif command == "/stats":
         keyboard = [
@@ -43,9 +29,5 @@ def handle_admin_commands(client: Client, message):
             for user_id in premium_users.keys()
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        client.send_message(
-            message.chat.id,
-            "Premium Users:",
-            reply_markup=reply_markup
-        )
+        await client.send_message(message.chat.id, "Premium Users:", reply_markup=reply_markup)
 
