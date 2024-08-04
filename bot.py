@@ -1,5 +1,4 @@
 from pyrogram import Client, filters
-from pyrogram.types import Message
 from datetime import datetime
 import os
 
@@ -35,14 +34,14 @@ class Bot(Client):
 ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝                 
                                    
                                     """)
-    
+
     def run(self):
-        self.add_handler(filters.command("start")(start_command))
-        self.add_handler(filters.private & filters.text()(handle_admin_commands))
-        self.add_handler(filters.command("help")(help_command))
-        self.add_handler(filters.command("buy_premium")(buy_premium_command))
-        self.add_handler(filters.callback_query()(callback_query))
-        self.add_handler(filters.callback_query(filters.regex(r"user_details_\d+"))(user_details_callback))
+        self.add_handler(Client.on_message(filters.command("start"))(start_command))
+        self.add_handler(Client.on_message(filters.private & filters.text)(handle_admin_commands))
+        self.add_handler(Client.on_message(filters.command("help"))(help_command))
+        self.add_handler(Client.on_message(filters.command("buy_premium"))(buy_premium_command))
+        self.add_handler(Client.on_callback_query()(callback_query))
+        self.add_handler(Client.on_callback_query(filters.regex(r"user_details_\d+"))(user_details_callback))
         super().run()
 
 if __name__ == "__main__":
