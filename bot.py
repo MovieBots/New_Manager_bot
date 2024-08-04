@@ -1,10 +1,12 @@
 from pyrogram import Client, filters
+from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from datetime import datetime
 import os
 import logging
 from config import API_ID, API_HASH, TG_BOT_TOKEN, TG_BOT_WORKERS, OWNER_ID, ADMINS
 
 # Import your handlers
+# Dont Steel them over all use chatgpt if you want to make your own repo's (Not kidding tho) 
 from handlers.start import start_command
 from handlers.admin import handle_admin_commands
 from handlers.help import help_command
