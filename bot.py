@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 from datetime import datetime
 import os
+from config import API_ID, API_HASH, TG_BOT_TOKEN, TG_BOT_WORKERS, OWNER_ID, ADMINS
 
 # Import your handlers
 from handlers.start import start_command
@@ -13,10 +14,10 @@ class Bot(Client):
     def __init__(self):
         super().__init__(
             "my_bot",
-            api_id=os.getenv("API_ID"),
-            api_hash=os.getenv("API_HASH"),
-            bot_token=os.getenv("TG_BOT_TOKEN"),
-            workers=int(os.getenv("TG_BOT_WORKERS", "4"))
+            api_id=API_ID,
+            api_hash=API_HASH,
+            bot_token=TG_BOT_TOKEN,
+            workers=TG_BOT_WORKERS
         )
 
     async def start(self):
