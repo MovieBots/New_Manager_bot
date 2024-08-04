@@ -1,20 +1,27 @@
-# Don't change any think here this is important part 
-from pyrogram import Client, filters
-from pyrogram.handlers import MessageHandler, CallbackQueryHandler
-from datetime import datetime
 import logging
-from config import API_ID, API_HASH, TG_BOT_TOKEN, TG_BOT_WORKERS, OWNER_ID, ADMINS
+import os
+from datetime import datetime
 
-# Import your handlers
-from handlers.start import start_command
-from handlers.admin import handle_admin_commands
-from handlers.help import help_command
-from handlers.premium import buy_premium_command, callback_query
-from handlers.user_stats import user_details_callback
+from pyrogram import Client, filters
+from pyrogram.handlers import MessageHandler
+from dotenv import load_dotenv
 
-# Set up logging
+load_dotenv()
+
+API_ID = os.getenv("API_ID")
+API_HASH = os.getenv("API_HASH")
+TG_BOT_TOKEN = os.getenv("TG_BOT_TOKEN")
+TG_BOT_WORKERS = int(os.getenv("TG_BOT_WORKERS", "4"))
+OWNER_ID = int(os.getenv("OWNER_ID"))
+ADMINS = [int(admin) for admin in os.getenv("ADMINS", "").split(",")]
+
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+
+async def start_command(client, message):
+    await message.reply(
+        "Yo what's up\n\nI am a membership provider bot by Arpit.",
+        parse_mode='markdown'
+    )
 
 class Bot(Client):
     def __init__(self):
@@ -25,39 +32,37 @@ class Bot(Client):
             bot_token=TG_BOT_TOKEN,
             workers=TG_BOT_WORKERS
         )
+        self.LOGGER = logging.getLogger(__name__)
 
     async def start(self):
         await super().start()
         usr_bot_me = await self.get_me()
         self.uptime = datetime.now()
-        
-        logger.info(f"Bot Running..!\n\nCreated by \n@iTz_Anayokoji")
-        logger.info(f"""\n\n
- █████╗ ███╗   ██╗██╗███████╗██╗  ██╗██╗███╗   ██╗
-██╔══██╗████╗  ██║██║██╔════╝██║  ██║██║████╗  ██║
-███████║██╔██╗ ██║██║███████╗███████║██║██╔██╗ ██║
-██╔══██║██║╚██╗██║██║╚════██║██╔══██║██║██║╚██╗██║
-██║  ██║██║ ╚████║██║███████║██║  ██║██║██║ ╚████║
-╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝                 
-                                   
-                                    """)
+
+        self.set_parse_mode("html")
+        self.LOGGER.info(f"Bot Running..!\n\nCreated by \n@iTz_Anayokoji")
+        self.LOGGER.info(f"""\n\n
+         █████╗ ███╗   ██╗██╗███████╗██╗  ██╗██╗███╗   ██╗
+        ██╔══██╗████╗  ██║██║██╔════╝██║  ██║██║████╗  ██║
+        ███████║██╔██╗ ██║██║███████╗███████║██║██╔██╗ ██║
+        ██╔══██║██║╚██╗██║██║╚════██║██╔══██║██║██║╚██╗██║
+        ██║  ██║██║ ╚████║██║███████║██║  ██║██║██║ ╚████║
+        ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝                 
+                               
+                                """)
 
     def run(self):
-        # Register handlers
         self.add_handler(MessageHandler(start_command, filters.command("start")))
-        self.add_handler(MessageHandler(handle_admin_commands, filters.private & filters.text))
-        self.add_handler(MessageHandler(help_command, filters.command("help")))
-        self.add_handler(MessageHandler(buy_premium_command, filters.command("buy_premium")))
-        self.add_handler(CallbackQueryHandler(callback_query))
-        self.add_handler(CallbackQueryHandler(user_details_callback, filters.regex(r"user_details_\d+")))
+        super().run()
 
-        # Start the bot and keep it running
-        self.loop.run_until_complete(self.start())
-        self.loop.run_forever()
+    async def stop(self):
+        await super().stop()
+        self.LOGGER.info("Bot stopped. Bye!")
 
 if __name__ == "__main__":
     bot = Bot()
     bot.run()
+
 
 
 
