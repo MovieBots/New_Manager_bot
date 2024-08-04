@@ -1,5 +1,4 @@
 # Don't change any think here this is important part 
-
 from pyrogram import Client, filters
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from datetime import datetime
@@ -53,12 +52,13 @@ class Bot(Client):
         self.add_handler(CallbackQueryHandler(user_details_callback, filters.regex(r"user_details_\d+")))
 
         # Start the bot and keep it running
-        self.start()
-        self.idle()
+        self.loop.run_until_complete(self.start())
+        self.loop.run_forever()
 
 if __name__ == "__main__":
     bot = Bot()
     bot.run()
+
 
 
 
