@@ -3,3 +3,4 @@ pyrofork
 pyromod
 TgCrypto
 python-dotenv
+asyncio
