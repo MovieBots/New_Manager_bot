@@ -1,9 +1,7 @@
-# handlers/start.py
+from pyrogram import Client
+from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 
-from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
-async def start_command(client: Client, message):
+async def start_command(client: Client, message: Message):
     await client.send_message(
         message.chat.id,
         "Yo what's up\n\nI am a membership provider bot by Arpit.",
