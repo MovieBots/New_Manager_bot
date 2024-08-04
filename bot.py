@@ -5,7 +5,6 @@ from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from datetime import datetime
 import logging
 from config import API_ID, API_HASH, TG_BOT_TOKEN, TG_BOT_WORKERS, OWNER_ID, ADMINS
-import asyncio
 
 # Import your handlers
 from handlers.start import start_command
@@ -35,8 +34,6 @@ class Bot(Client):
         
         logger.info(f"Bot Running..!\n\nCreated by \n@iTz_Anayokoji")
         logger.info(f"""\n\n
-
-        
  █████╗ ███╗   ██╗██╗███████╗██╗  ██╗██╗███╗   ██╗
 ██╔══██╗████╗  ██║██║██╔════╝██║  ██║██║████╗  ██║
 ███████║██╔██╗ ██║██║███████╗███████║██║██╔██╗ ██║
@@ -46,7 +43,7 @@ class Bot(Client):
                                    
                                     """)
 
-    async def run(self):
+    def run(self):
         # Register handlers
         self.add_handler(MessageHandler(start_command, filters.command("start")))
         self.add_handler(MessageHandler(handle_admin_commands, filters.private & filters.text))
@@ -55,14 +52,13 @@ class Bot(Client):
         self.add_handler(CallbackQueryHandler(callback_query))
         self.add_handler(CallbackQueryHandler(user_details_callback, filters.regex(r"user_details_\d+")))
 
-        # Start the bot
-        await self.start()
-        # Run the bot's idle loop
-        await self.idle()
+        # Start the bot and keep it running
+        self.start()
+        self.idle()
 
 if __name__ == "__main__":
     bot = Bot()
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(bot.run())
+    bot.run()
+
 
 
