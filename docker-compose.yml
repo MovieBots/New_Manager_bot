@@ -4,5 +4,11 @@ services:
     build: .
     ports:
       - "8080:8080"
-    env_file:
-      - .env
+    environment:
+      API_ID: "your_api_id"
+      API_HASH: "your_api_hash"
+      TG_BOT_TOKEN: "your_bot_token"
+      TG_BOT_WORKERS: "4"
+      PORT: "8080"
+      OWNER_ID: "6450266465"
+      ADMINS: "admin1_id,admin2_id"  # Replace with actual admin IDs
