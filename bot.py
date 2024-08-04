@@ -3,7 +3,6 @@
 from pyrogram import Client, filters
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from datetime import datetime
-import os
 import logging
 from config import API_ID, API_HASH, TG_BOT_TOKEN, TG_BOT_WORKERS, OWNER_ID, ADMINS
 
@@ -45,16 +44,22 @@ class Bot(Client):
                                     """)
 
     def run(self):
+        # Register handlers
         self.add_handler(MessageHandler(start_command, filters.command("start")))
         self.add_handler(MessageHandler(handle_admin_commands, filters.private & filters.text))
         self.add_handler(MessageHandler(help_command, filters.command("help")))
         self.add_handler(MessageHandler(buy_premium_command, filters.command("buy_premium")))
         self.add_handler(CallbackQueryHandler(callback_query))
         self.add_handler(CallbackQueryHandler(user_details_callback, filters.regex(r"user_details_\d+")))
-        super().run()
+
+        # Start the bot
+        self.start()
+        # Run the bot's idle loop
+        self.idle()
 
 if __name__ == "__main__":
     bot = Bot()
     bot.run()
+
 
 
