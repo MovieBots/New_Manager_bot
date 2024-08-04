@@ -4,7 +4,6 @@ import os
 import logging
 from config import API_ID, API_HASH, TG_BOT_TOKEN, TG_BOT_WORKERS, OWNER_ID, ADMINS
 
-# Its Very Difficult to make this script please arpit pay me 
 # Import your handlers
 from handlers.start import start_command
 from handlers.admin import handle_admin_commands
@@ -43,16 +42,15 @@ class Bot(Client):
                                     """)
 
     def run(self):
-        self.add_handler(filters.command("start")(start_command))
-        self.add_handler(filters.private & filters.text(handle_admin_commands))
-        self.add_handler(filters.command("help")(help_command))
-        self.add_handler(filters.command("buy_premium")(buy_premium_command))
-        self.add_handler(filters.callback_query()(callback_query))
-        self.add_handler(filters.callback_query(filters.regex(r"user_details_\d+"))(user_details_callback))
+        self.add_handler(MessageHandler(start_command, filters.command("start")))
+        self.add_handler(MessageHandler(handle_admin_commands, filters.private & filters.text))
+        self.add_handler(MessageHandler(help_command, filters.command("help")))
+        self.add_handler(MessageHandler(buy_premium_command, filters.command("buy_premium")))
+        self.add_handler(CallbackQueryHandler(callback_query))
+        self.add_handler(CallbackQueryHandler(user_details_callback, filters.regex(r"user_details_\d+")))
         super().run()
 
 if __name__ == "__main__":
     bot = Bot()
     bot.run()
-
 
