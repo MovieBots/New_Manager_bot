@@ -1,5 +1,12 @@
+# Dont Change anythink it will lead to an error
+
+import asyncio
+
 from bot import Bot
 
-if __name__ == "__main__":
+async def main():
     bot = Bot()
-    bot.run()
+    await bot.run()
+
+if __name__ == "__main__":
+    asyncio.run(main())
