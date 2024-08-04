@@ -12,6 +12,9 @@ RUN pip install -r /app/requirements.txt
 COPY . /app/
 WORKDIR /app
 
+# Install dotenv
+RUN pip install python-dotenv
+
 # Expose port 8080
 EXPOSE 8080
 
